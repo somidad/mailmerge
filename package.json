@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^7.0.0",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-menubar": "^1.0.4",
     "ckeditor5-custom-build": "file:ckeditor5",
     "class-variance-authority": "^0.7.0",
