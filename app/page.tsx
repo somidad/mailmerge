@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import dot from "dot";
+import DataSheet from "@/components/dataSheet";
 
 const CustomEditor = dynamic(
   () => {
@@ -18,6 +19,7 @@ export default function Writer() {
   const [content, setContent] = useState("");
   const refData = useRef<HTMLInputElement>(null);
   const [data, setData] = useState("");
+  const [isDataSheetOpen, setDataSheetVisibility] = useState(false);
 
   function onOpen(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -97,10 +99,22 @@ export default function Writer() {
           <input type="file" ref={refData} hidden onChange={onLoad} />
         </MenubarMenu>
         <MenubarMenu>
+          <MenubarTrigger
+            onClick={() => setDataSheetVisibility((current) => !current)}
+          >
+            {isDataSheetOpen ? "Hide data" : "Show data"}
+          </MenubarTrigger>
+        </MenubarMenu>
+        <MenubarMenu>
           <MenubarTrigger onClick={publish}>Publish</MenubarTrigger>
         </MenubarMenu>
       </Menubar>
       <CustomEditor data={content} onChange={setContent} />
+      <DataSheet
+        open={isDataSheetOpen}
+        onOpenChange={setDataSheetVisibility}
+        data={data}
+      />
     </div>
   );
 }
