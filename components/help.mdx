@@ -1,0 +1,74 @@
+## Mailmerge
+
+> Write once, publish to everyone
+
+### Workflow
+
+Like any other mailmerge, the following workflow can apply:
+
+1. Define and load data
+1. Write down a _template_
+1. Publish
+
+### Defining and loading data
+
+Data for mailmerge must be in _JSON_ format.
+There must be a top-level _Array_, starting with `[` and ending with `]`.
+And each item must be an _Object_, starting with `{` and ending with `}`, with `key` property.
+
+Here is the simplest example:
+
+```json
+[
+  {
+    "key": "Alice"
+  },
+  {
+    "key": "Bob"
+  }
+]
+```
+
+With this data, mailmerge will render two documents for `Alice` and `Bob` each.
+
+Now you can define any property in each Object as long as it complies JSON format.
+
+> For more information about JSON format,
+> fee "JSON structure" section of
+> [this document by Mozilla](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON#json_structure)
+
+When the data is ready, you can load and view it via 'Load data' and 'Show data' menu.
+
+### Writing a template
+
+You can write a template by using the WYSIWYG editor.
+
+You may want to use _template delimiters_ for 'data dependent' content:
+
+- `{{=it.key}}` prints a value of `key` property of data
+- `{{? condition }} content {{?}}` renders a following content only if `condition` is evaulated to be true. For example:
+
+```
+{{? it.key == "Alice" }}
+See you again, Alice!
+{{?}}
+```
+
+renders _See you again, Alice!_ only for data with `key` Alice.
+
+> For more information about template delimiters,
+> find 'default delimiters' in
+> [doT.js official document](https://olado.github.io/doT/index.html)
+
+Here, you may take `it.` as an individual data container for each publication so
+you may want to use it everytime that you access to data.
+You can use `.keyName` to access a value of `keyName` property of an Object and
+`[i]` to access a value of _i_ th (0-indexed) item of an Array.
+
+> For more information about accessing data of an object and an array,
+> see [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) and
+> [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) by Mozilla
+
+### Publishing
+
+Press 'Publish' and documents will be downloaded shortly.

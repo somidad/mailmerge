@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import dot from "dot";
 import DataSheet from "@/components/dataSheet";
+import Help from "@/components/help.mdx";
 
 const CustomEditor = dynamic(
   () => {
@@ -18,8 +19,9 @@ export default function Writer() {
   const refFile = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
   const refData = useRef<HTMLInputElement>(null);
-  const [data, setData] = useState("");
+  const [data, setData] = useState("[]");
   const [isDataSheetOpen, setDataSheetVisibility] = useState(false);
+  const [editOrHelp, setEditrOrHelp] = useState<"edit" | "help">("edit");
 
   function onOpen(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -108,8 +110,25 @@ export default function Writer() {
         <MenubarMenu>
           <MenubarTrigger onClick={publish}>Publish</MenubarTrigger>
         </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger
+            onClick={() => {
+              setEditrOrHelp((current) =>
+                current === "edit" ? "help" : "edit"
+              );
+            }}
+          >
+            {editOrHelp === "edit" ? "Help" : "Edit"}
+          </MenubarTrigger>
+        </MenubarMenu>
       </Menubar>
-      <CustomEditor data={content} onChange={setContent} />
+      {editOrHelp === "edit" ? (
+        <CustomEditor data={content} onChange={setContent} />
+      ) : (
+        <div className="p-2">
+          <Help />
+        </div>
+      )}
       <DataSheet
         open={isDataSheetOpen}
         onOpenChange={setDataSheetVisibility}
