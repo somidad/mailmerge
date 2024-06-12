@@ -14,4 +14,4 @@ const nextConfig = {
   },
 };
 
-export default withMdx(nextConfig);
+export default withMdx()(nextConfig);
